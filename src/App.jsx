@@ -1,18 +1,12 @@
-import { useState, useContext } from "react";
-import Badge from "react-bootstrap/Badge";
-import Button from "react-bootstrap/Button";
+import { useState } from "react";
 import Accordion from "react-bootstrap/Accordion";
 import ApiService from "./services/ApiService";
 import SummaryService from "./services/SummaryService";
-import { useAccordionButton } from "react-bootstrap/AccordionButton";
 import Spinner from "react-bootstrap/Spinner";
 import Container from "react-bootstrap/Container";
-import Row from "react-bootstrap/Row";
-import Col from "react-bootstrap/Col";
 
 function App() {
   const [items, setItems] = useState([]);
-  const [summary, setSummary] = useState("");
   const [term, setTerm] = useState("");
   const [loading, setLoading] = useState(false);
   const [summaries, setSummaries] = useState([]);
@@ -36,7 +30,6 @@ function App() {
     setItems([]);
     setLoading(true);
     try {
-      console.log(term);
       const data = await ApiService(term);
       setItems(data.doc);
     } catch (error) {
@@ -81,13 +74,9 @@ function App() {
                   </Accordion.Header>
                   <Accordion.Body>
                     {!summaries[index] ? (
-                      <Row>
-                        <Col className="justify-content-md-center">
-                          <Spinner animation="border" role="status">
-                            <span className="visually-hidden">Loading...</span>
-                          </Spinner>
-                        </Col>
-                      </Row>
+                      <Spinner animation="border" role="status">
+                        <span className="visually-hidden">Loading...</span>
+                      </Spinner>
                     ) : (
                       summaries[index]
                     )}
